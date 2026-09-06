@@ -2,14 +2,16 @@ const express = require('express');
 const db = require('../database');
 const { generarFolioUnico } = require('../utils/folio');
 const { calcularPrioridad } = require('../utils/prioridad');
+const { uploadUsuario } = require('../middleware/upload');
 
 const router = express.Router();
 
 const CATEGORIAS_VALIDAS = ['hardware', 'redes', 'software', 'accesos', 'solicitudes', 'otro'];
 
-// POST /api/tickets — crear ticket (usuario público, sin cuenta)
-router.post('/', (req, res) => {
+// POST /api/tickets — crear ticket (usuario público, sin cuenta), hasta 3 adjuntos
+router.post('/', uploadUsuario.array('adjuntos', 3), (req, res) => {
   const { correo, nombre, categoria, mensaje } = req.body;
+  const archivos = req.files || [];
 
   if (!correo || !categoria || !mensaje) {
     return res.status(400).json({ error: 'correo, categoria y mensaje son requeridos' });
@@ -40,7 +42,20 @@ router.post('/', (req, res) => {
               db.run(
                 `INSERT INTO mensajes_ticket (id_ticket, tipo_remitente, contenido)
                  VALUES (?, 'usuario', ?)`,
-                [id_ticket, mensaje]
+                [id_ticket, mensaje],
+                function (err) {
+                  if (err) return; // el ticket ya se creó; no bloqueamos la respuesta por esto
+                  const id_mensaje = this.lastID;
+
+                  // Guarda cada adjunto vinculado a ese mensaje
+                  archivos.forEach((archivo) => {
+                    db.run(
+                      `INSERT INTO adjuntos (id_ticket, id_mensaje, ruta_archivo, tipo_archivo, subido_por)
+                       VALUES (?, ?, ?, ?, 'usuario')`,
+                      [id_ticket, id_mensaje, archivo.filename, archivo.mimetype]
+                    );
+                  });
+                }
               );
 
               // La prioridad se calcula y se guarda, pero nunca se expone al usuario público
@@ -109,13 +124,22 @@ router.post('/consultar', (req, res) => {
       (err, mensajes) => {
         if (err) return res.status(500).json({ error: 'Error del servidor' });
 
-        res.json({
-          folio: ticket.folio,
-          categoria: ticket.categoria,
-          estado: ticket.estado,
-          fecha_creacion: ticket.fecha_creacion,
-          mensajes,
-        });
+        db.all(
+          `SELECT id_adjunto, tipo_archivo, subido_por FROM adjuntos WHERE id_ticket = ?`,
+          [ticket.id_ticket],
+          (err, adjuntos) => {
+            if (err) return res.status(500).json({ error: 'Error del servidor' });
+
+            res.json({
+              folio: ticket.folio,
+              categoria: ticket.categoria,
+              estado: ticket.estado,
+              fecha_creacion: ticket.fecha_creacion,
+              mensajes,
+              adjuntos,
+            });
+          }
+        );
       }
     );
   });
