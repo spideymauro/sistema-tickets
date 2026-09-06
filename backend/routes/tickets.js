@@ -3,6 +3,7 @@ const db = require('../database');
 const { generarFolioUnico } = require('../utils/folio');
 const { calcularPrioridad } = require('../utils/prioridad');
 const { uploadUsuario } = require('../middleware/upload');
+const { notificarN8n } = require('../utils/webhook');
 
 const router = express.Router();
 
@@ -66,7 +67,7 @@ router.post('/', uploadUsuario.array('adjuntos', 3), (req, res) => {
                 mensaje: 'Ticket creado correctamente',
               });
 
-              // TODO (fase siguiente): disparar webhook a n8n con { evento: 'nuevo', folio, correo }
+              notificarN8n('nuevo', { folio, correo });
             }
           );
         })
