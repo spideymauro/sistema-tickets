@@ -1,0 +1,63 @@
+.contenedor {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .contenedor {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 5rem 2rem;
+  }
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.marca {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  color: var(--color-primario);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  margin: 0;
+  color: var(--color-tinta);
+}
+
+.subtitulo {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-tinta-suave);
+  max-width: 42ch;
+  margin: 0;
+}
+
+.enlaceConsulta {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-tinta-suave);
+}
+
+.enlaceConsulta a {
+  font-weight: 600;
+}
+
+.widgetZona {
+  display: flex;
+  justify-content: center;
+}
