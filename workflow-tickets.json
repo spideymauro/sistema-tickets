@@ -1,0 +1,228 @@
+{
+  "name": "Notificaciones tickets",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tickets",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-node-1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-200, 300],
+      "webhookId": "tickets-webhook-001"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-secreto-1",
+              "leftValue": "={{ $json.headers['x-webhook-secret'] }}",
+              "rightValue": "mi-secreto-123",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-secreto-1",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [40, 300]
+    },
+    {
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "cond-nuevo-1",
+                    "leftValue": "={{ $json.body.evento }}",
+                    "rightValue": "nuevo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nuevo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "cond-respuesta-1",
+                    "leftValue": "={{ $json.body.evento }}",
+                    "rightValue": "respuesta",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "respuesta"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "cond-cierre-1",
+                    "leftValue": "={{ $json.body.evento }}",
+                    "rightValue": "cierre",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cierre"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-evento-1",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [280, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "correo@ejemplo.com",
+        "toEmail": "={{ $json.body.correo }}",
+        "subject": "=Recibimos tu ticket {{ $json.body.folio }}",
+        "text": "=Hola, recibimos tu solicitud de soporte. Tu folio es {{ $json.body.folio }}. Pronto un agente la revisará.",
+        "options": {}
+      },
+      "id": "email-nuevo-1",
+      "name": "Correo Nuevo",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [560, 140]
+    },
+    {
+      "parameters": {
+        "fromEmail": "correo@ejemplo.com",
+        "toEmail": "={{ $json.body.correo }}",
+        "subject": "=Nueva respuesta en tu ticket {{ $json.body.folio }}",
+        "text": "=Un agente respondió tu ticket {{ $json.body.folio }}. Ingresa con tu correo y folio para verla.",
+        "options": {}
+      },
+      "id": "email-respuesta-1",
+      "name": "Correo Respuesta",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [560, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "correo@ejemplo.com",
+        "toEmail": "={{ $json.body.correo }}",
+        "subject": "=Tu ticket {{ $json.body.folio }} fue cerrado",
+        "text": "=Tu ticket {{ $json.body.folio }} se cerró automáticamente. Si el problema persiste, crea un nuevo ticket.",
+        "options": {}
+      },
+      "id": "email-cierre-1",
+      "name": "Correo Cierre",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [560, 460]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Correo Nuevo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Correo Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Correo Cierre",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "manual-export"
+  }
+}
