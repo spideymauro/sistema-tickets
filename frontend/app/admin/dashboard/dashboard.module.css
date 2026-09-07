@@ -13,12 +13,141 @@
   margin-bottom: 1.5rem;
 }
 
+.encabezadoTitulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
 .titulo {
   font-family: var(--fuente-titulos);
   font-weight: 800;
   font-size: 1.6rem;
-  margin: 0 0 1.25rem;
+  margin: 0;
   color: var(--color-primario);
+}
+
+.toggleVista {
+  display: flex;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.botonVista {
+  border: none;
+  background: #fff;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-tinta-suave);
+}
+
+.botonVistaActivo {
+  background: var(--color-primario);
+  color: #fff;
+}
+
+.tablero {
+  display: flex;
+  gap: 0.85rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.columna {
+  flex: 0 0 240px;
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.columnaSobre {
+  background: var(--color-primario-suave);
+  border-color: var(--color-primario);
+}
+
+.columnaEncabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-tinta);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.columnaContador {
+  background: var(--color-borde);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.72rem;
+}
+
+.columnaCuerpo {
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.columnaVacia {
+  font-size: 0.78rem;
+  color: var(--color-tinta-suave);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.tarjetaTicket {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.tarjetaTicket:active {
+  cursor: grabbing;
+}
+
+.tarjetaFolio {
+  margin: 0.2rem 0 0;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-primario);
+}
+
+.tarjetaNombre {
+  margin: 0;
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tarjetaCategoria {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-tinta-suave);
+  text-transform: capitalize;
+}
+
+.tarjetaFecha {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--color-tinta-suave);
 }
 
 .tarjetasResumen {
