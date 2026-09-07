@@ -1,0 +1,250 @@
+.contenedor {
+  min-height: 100vh;
+  background: var(--color-fondo);
+  padding: 2rem 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.volver {
+  border: none;
+  background: none;
+  color: var(--color-primario);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.nota {
+  color: var(--color-tinta-suave);
+}
+
+.error {
+  color: #b3261e;
+  font-size: 0.85rem;
+}
+
+.encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.folio {
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--color-primario);
+}
+
+.metaInfo {
+  margin: 0.3rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-tinta-suave);
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.prioridadPill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  height: fit-content;
+}
+
+.prioridad_urgente {
+  background: #fbe0dc;
+  color: #b3261e;
+}
+
+.prioridad_alta {
+  background: var(--color-acento-suave);
+  color: var(--color-acento);
+}
+
+.prioridad_media {
+  background: #fff4d6;
+  color: #8a6d00;
+}
+
+.prioridad_baja {
+  background: var(--color-primario-suave);
+  color: var(--color-primario);
+}
+
+.acciones {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.botonSecundario {
+  border: 1px solid var(--color-primario);
+  background: #fff;
+  color: var(--color-primario);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.select {
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  background: #fff;
+  text-transform: capitalize;
+}
+
+.hilo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.mensajeUsuario,
+.mensajeAgente {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  max-width: 85%;
+}
+
+.mensajeUsuario {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  align-self: flex-start;
+}
+
+.mensajeAgente {
+  background: var(--color-primario-suave);
+  align-self: flex-end;
+}
+
+.mensajeRemitente {
+  margin: 0 0 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-tinta-suave);
+}
+
+.mensajeTexto {
+  margin: 0 0 0.3rem;
+  font-size: 0.9rem;
+}
+
+.contenedorAdjuntos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.4rem 0;
+}
+
+.miniaturaAdjunto {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+
+.miniaturaAdjunto:hover {
+  opacity: 0.85;
+}
+
+.imagenMiniatura {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tarjetaAdjuntoPdf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 90px;
+  height: 90px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  background: var(--color-fondo);
+  flex-shrink: 0;
+  color: var(--color-tinta);
+}
+
+.tarjetaAdjuntoPdf:hover {
+  border-color: var(--color-primario);
+}
+
+.iconoPdf {
+  font-size: 1.6rem;
+}
+
+.etiquetaPdf {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-tinta-suave);
+}
+
+.mensajeFecha {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--color-tinta-suave);
+}
+
+.formRespuesta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.textarea {
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 1px;
+}
+
+.inputArchivo {
+  font-size: 0.82rem;
+}
+
+.boton {
+  border: none;
+  background: var(--color-acento);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  align-self: flex-start;
+}
+
+.boton:disabled {
+  opacity: 0.6;
+}
